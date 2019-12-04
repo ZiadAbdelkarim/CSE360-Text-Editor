@@ -78,6 +78,27 @@ public class test {
 		JButton btnHelp = new JButton("Help");
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String menu = "If no commands are entered the files will default to ";
+				menu += "single space, single column, and left justified.";
+				menu += "\n\nCommands are to be entered into the .txt file previous to processing.";
+				menu += "\nOnce all commands have been entered, load your file and click process to make changes.";
+				menu += "\n\nJustification Commands: ";
+				menu += "\n-r    right justification";
+				menu += "\n-c    center justification";
+				menu += "\n-l    left justification";
+				menu += "\n\nSpacing Commands:";
+				menu += "\n-d    double space";
+				menu += "\n-s    single space";
+				menu += "\n\nIndentation Commands:";
+				menu += "\n-i    indent on the first line (left justified only)";
+				menu += "\n-b    indent for multiple lines";
+				menu += "\n\nColumn Commands:";
+				menu += "\n-1    one column";
+				menu += "\n-2    two columns";
+				menu += "\n\nExtra commands:";
+				menu += "\n-e    adds a blank line where the command is placed";
+				menu += "\n-n    reset back to default";
+				JOptionPane.showMessageDialog(null, menu);
 			}
 		});
 		btnHelp.setBounds(10, 47, 115, 29);
