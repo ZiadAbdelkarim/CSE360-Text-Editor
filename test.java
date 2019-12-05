@@ -53,7 +53,7 @@ public class test {
 	private void initialize() {
 		frmTextEditor = new JFrame();
 		frmTextEditor.setTitle("Text Editor 1000");
-		frmTextEditor.setBounds(400,600,400,600);
+		frmTextEditor.setBounds(400,70,400,600);
 		frmTextEditor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTextEditor.getContentPane().setLayout(null);
 		
