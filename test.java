@@ -1,10 +1,3 @@
-/** 
- *  Group:       8
- *  Name: 		 Ziad Abdelkarim, Maxim Tolea, Angel Flores, Chad Lutz
- *  Class:		 CSE360
- *  Section: 	 Wedneday 9:40 am
- *  Assignment:  Text Editor Final Project
- */
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -24,19 +17,10 @@ import java.time.format.DateTimeFormatter;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 
-/*
-	This class holds all of the elements of the window interface for the Text Editor 1000. This also contains all of the processing 
-	calculations to be done on a file. 
-*/
 public class test {
 
 	private JFrame frmTextEditor;
 	private File filename;
-	
-	// The following variables are for determining what command are called
-  // The initialized variables are set to their default
-	// Justification booleans
-
 	// Just.
 	boolean isLeft = true; // Left
 	boolean isCenter = false; // Center
@@ -44,18 +28,20 @@ public class test {
 	// Spacing
 	boolean isSingle = true; // Single
 
-	// Indentation booleans
+	// Indent
 	boolean isIndent = false; // Is there indentation
 	boolean isI = false; // Indent
 	boolean isB = false; // Multiple Indents
 
-	// Column boolean
+	// Column
 	boolean is1 = true; // Single
 
-	// Extra booleans
+	// Extra
 	boolean isT = false; // Title
 	
 	String st;
+	String complete ="";
+	String output = "OUTPUT.txt";
 
 	/**
 	 * Launch the application.
@@ -84,7 +70,6 @@ public class test {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		// The component of the frame
 		frmTextEditor = new JFrame();
 		frmTextEditor.setTitle("Text Editor 1000");
 		frmTextEditor.setBounds(400, 70, 400, 600);
@@ -173,8 +158,7 @@ public class test {
 		scrollPane.setViewportView(errorLog);
 		errorLog.setEditable(false);
 		panel.add(scrollPane);
-		
-		//The file preview button for finding he file to be manipulated
+
 		JButton btnFilePreview = new JButton("File Preview");
 		btnFilePreview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -200,8 +184,7 @@ public class test {
 		});
 		btnFilePreview.setBounds(10, 85, 350, 29);
 		panel.add(btnFilePreview);
-		
-		//Process file button which results in the saving of the file
+
 		JButton btnProcessFile = new JButton("Process File and Save");
 		btnProcessFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -245,37 +228,15 @@ public class test {
 
 	// processFile begins the reading, using the Buffered Reader.
 	public void processFile(File file) throws Exception {
-		int Tspace = 80; // total characters in a line
-		int Uspace = 0; // unused space, the gaps filling in the line with as much text but still have
-						// the remaining space
-		// Just.
-		boolean isLeft = true; // Left
-		boolean isCenter = false; // Center
-
-		// Spacing
-		boolean isSingle = true; // Single
-
-		// Indent
-		boolean isIndent = false; // Is there indentation
-		boolean isI = false; // Indent
-		boolean isB = false; // Multiple Indents
-
-		// Column
-		boolean is1 = true; // Single
-
-		// Extra
-		boolean isT = false; // Title
 
 		BufferedReader br = new BufferedReader(new FileReader(file));
 	
-		BufferedWriter writer = new BufferedWriter(new FileWriter("OUTPUT_test.txt"));// destination can be specified
+		BufferedWriter writer = new BufferedWriter(new FileWriter(output));// destination can be specified
 																						// just like in the reader
 		// using buffered reader
 		while ((st = br.readLine()) != null) {
-			
 			if (st.length() == 2 && st.charAt(0) == '-') {
 				char command = st.charAt(1);
-				//switch to determine and act upon the commands
 				switch (command) {
 				// just.
 				case 'l': {
@@ -347,29 +308,42 @@ public class test {
 				} // end of switch
 
 			} // end of if
+			if(st.charAt(0) == '-') {
+				for(int i = 79; i<complete.length(); i+=79) {
+					//st.replace(st.charAt(i),'\n');
+					complete = complete.substring(0,i) + " \n" + complete.substring(i, complete.length());
+				}
+				complete+='\n';
+				writer.write(complete);
+				writer.write('\n');
+				complete = check(complete);
+				FileWriter tw = new FileWriter(output, false);
+				complete="     "+complete;
+				tw.write(complete);
+				tw.close();
+				complete ="";
+			}else {
+				complete += st;			
+			}	
 			
-			while(st.charAt(0) != '-') {
-				st+=st;		
-			}
-			for(int i = 79; i<st.length(); i+=79) {
-				//st.replace(st.charAt(i),'\n');
-				st = st.substring(0,i) + "\n" + st.substring(i, st.length());
-			}
-			st= st+'\n';
 			
 		}
 		writer.close();
 	}
 
-	public String check(String line, File file) throws FileNotFoundException {
-		BufferedReader br = new BufferedReader(new FileReader(file));
+	public String check(String line) {
 		String I ="     ";// indent with 5 spaces
 		String B = "          ";//indent with 10 spaces
+		String temp;
 		if (isIndent == true && (isLeft == true || isCenter != true)) {
 			if (isI) {
 				if (is1 == true) {
 					if (isSingle == true) {// single spaced
-						line = I + line;
+						line ='\t'+line;
+						//System.out.println(line);
+						for(int i = 80; i<line.length(); i+=80) {
+							line = line.substring(0,i) + '\n' + line.substring(i, line.length());
+						}
 						//line = line.charAt()
 						
 					} // end of isSingle
