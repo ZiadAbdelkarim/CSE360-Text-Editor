@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
 import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 import java.awt.Font;
 import java.io.*;
 import java.time.LocalDateTime;
@@ -23,6 +21,25 @@ public class test {
 
 	private JFrame frmTextEditor;
 	private File filename;
+	// Just.
+	boolean isL = true; // Left
+	boolean isC = false; // Center
+
+	// Spacing
+	boolean isS = true; // Single
+
+	// Indent
+	boolean isIndent = false; // Is there indentation
+	boolean isI = false; // Indent
+	boolean isB = false; // Multiple Indents
+
+	// Column
+	boolean is1 = true; // Single
+
+	// Extra
+	boolean isT = false; // Title
+	
+	String st;
 
 	/**
 	 * Launch the application.
@@ -214,12 +231,10 @@ public class test {
 						// the remaining space
 		// Just.
 		boolean isL = true; // Left
-		boolean isR = false; // Rigth
 		boolean isC = false; // Center
 
 		// Spacing
 		boolean isS = true; // Single
-		boolean isD = false; // Double
 
 		// Indent
 		boolean isIndent = false; // Is there indentation
@@ -228,15 +243,12 @@ public class test {
 
 		// Column
 		boolean is1 = true; // Single
-		boolean is2 = false; // Double
 
 		// Extra
-		boolean isE = false; // Inline Blank
-		boolean isN = false; // Set to Default
 		boolean isT = false; // Title
 
 		BufferedReader br = new BufferedReader(new FileReader(file));
-		String st;
+	
 		BufferedWriter writer = new BufferedWriter(new FileWriter("OUTPUT_test.txt"));// destination can be specified
 																						// just like in the reader
 		// using buffered reader
@@ -271,31 +283,26 @@ public class test {
 				// just.
 				case 'l': {
 					isL = true;
-					isR = false;
 					isC = false;
 					break;
 				}
 				case 'r': {
 					isL = false;
-					isR = true;
 					isC = false;
 					break;
 				}
 				case 'c': {
 					isL = false;
-					isR = false;
 					isC = true;
 					break;
 				}
 				// spacing
 				case 's': {
 					isS = true;
-					isD = false;
 					break;
 				}
 				case 'd': {
 					isS = false;
-					isD = true;
 					break;
 				}
 				// indent
@@ -314,21 +321,25 @@ public class test {
 				// Coloumn
 				case '1': {
 					is1 = true;
-					is2 = false;
 					break;
 				}
 				case '2': {
 					is1 = false;
-					is2 = true;
 					break;
 				}
 				// Extra
 				case 'e': {
-					isE = true;
+					writer.write('\n');
+					writer.write('\n');
 					break;
 				}
 				case 'n': {
-					isN = true;
+					isL = true;
+					isC = false;
+
+					isS = true;
+
+					is1 = true;
 					break;
 				}
 				case 't': {
@@ -339,41 +350,70 @@ public class test {
 				} // end of switch
 
 			} // end of if
-			// Starting if statements
-			if (isL == true) {
-				if (isIndent == true) {
-					if (is1 == true) {
-						if (isS == true) {
-
-						} // end of isS
-						if (isD == true) {
-
-						} // end of isD
-					} // end of is1
-					if (is2 == true) {
-						if (isS == true) {
-
-						} // end of isS
-						if (isD == true) {
-
-						} // end of isD
-
-					} // end of is2
-				} // end of isIndent and must have the condition for if no indent
-
-			} // end of isL
-			if (isR == true) {
-
-			} // end of isR
-			if (isC == true) {
-
-			} // end of isC
-
+			
+			while(st.length() == 2 && st.charAt(0) == '-') {
+				
+			}
+			
 		}
 		writer.close();
 	}
-	public void check(File file ) throws Exception{
-		
+
+	public String check(String line, File file) throws FileNotFoundException {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String I ="     ";// indent with 5 spaces
+		String B = "          ";//indent with 10 spaces
+		if (isIndent == true && (isL == true || isC != true)) {
+			if (isI) {
+				if (is1 == true) {
+					if (isS == true) {// single spaced
+						line = I + line;
+						line = line.charAt()
+						
+					} // end of isS
+					else { // is Doubled
+
+					}
+				} // end of is1
+				else {// if 2 columns
+					if (isS == true) {
+					} // end of isS
+					else { // is Doubled
+
+					}
+				}
+			} // end of isI
+			if (isB) {
+				if (is1 == true) {
+					if (isS == true) {
+					} // end of isS
+					else { // is Doubled
+
+					}
+				} // end of is1
+				else {// if 2 columns
+					if (isS == true) {
+					} // end of isS
+					else { // is Doubled
+
+					}
+				}
+			} // end of isB
+		} // end of if isIndent
+		if (is1 == true) { // COLUMN
+			if (isS == true) { // SPACING
+			} // end of isS
+			else { // is Doubled SPACING
+
+			}
+		} // end of is1
+		else {// if 2 columns COLUMN
+			if (isS == true) { // SPACING
+			} // end of isS
+			else { // is Doubled SPACING
+
+			}
+		}
+		return line;
 	}
 } // end of main
-
