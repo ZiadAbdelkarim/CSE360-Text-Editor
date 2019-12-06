@@ -1,11 +1,3 @@
-/** 
- *  Group:       8
- *  Name: 		 Ziad Abdelkarim, Maxim Tolea, Angel Flores, Chad Lutz
- *  Class:		 CSE360
- *  Section: 	 Wednesday 9:40 am
- *  Assignment:  Text Editor Final Project
- */
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -25,34 +17,28 @@ import java.time.format.DateTimeFormatter;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 
-/*
-	This class holds all of the elements of the window interface for the Text Editor 1000. This also contains all of the processing 
-	calculations to be done on a file. 
-*/
 public class test {
 
 	private JFrame frmTextEditor;
 	private File filename;
-	// The following variables are changed depending on the commands within the file
-	// The variables are initialized to defaults to begin with
-	// Justification booleans
-	boolean isLeft = true; 
-	boolean isCenter = false;
+	// Just.
+	boolean isLeft = true; // Left
+	boolean isCenter = false; // Center
 
-	// Spacing boolean
-	boolean isSingle = true; 
+	// Spacing
+	boolean isSingle = true; // Single
 
-	// Indentation booleans
-	boolean isIndent = false; 
+	// Indent
+	boolean isIndent = false; // Is there indentation
 	boolean isI = false; // Indent
 	boolean isB = false; // Multiple Indents
 
-	// This boolean specifies whether the text should be a single or double column
+	// Column
 	boolean is1 = true; // Single
 
-	boolean isTitle = false; 
+	// Extra
+	boolean isT = false; // Title
 	
-	//This will hold the contents of the file while it is being processed
 	String st;
 	String complete ="";
 	String output = "OUTPUT.txt";
@@ -103,13 +89,11 @@ public class test {
 		lblNewLabel.setBounds(10, 16, 180, 20);
 		panel.add(lblNewLabel);
 
-		//Success Label
 		JLabel SuccessMessage = new JLabel("");
 		SuccessMessage.setForeground(new Color(60, 179, 113));
 		SuccessMessage.setBounds(10, 206, 348, 20);
 		panel.add(SuccessMessage);
 
-		//Help menu Component
 		JButton btnHelp = new JButton("Help");
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -140,13 +124,11 @@ public class test {
 		btnHelp.setBounds(10, 47, 115, 29);
 		panel.add(btnHelp);
 
-		//The load file button prompts the user to enter a file name to be processed.
 		JButton btnLoad = new JButton("Load File");
 		btnLoad.setBounds(128, 47, 115, 29);
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				File file = null;
-				// Popup window 
 				String temp = JOptionPane.showInputDialog("Input filename if in same directory or full filepath:");
 				if (temp != null && !temp.isEmpty())
 					file = new File(temp);
@@ -164,7 +146,6 @@ public class test {
 		});
 		panel.add(btnLoad);
 
-		//The following components are where the errors will be shown
 		JLabel lblErrorLog = new JLabel("Error Log");
 		lblErrorLog.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblErrorLog.setBounds(10, 224, 103, 40);
@@ -178,7 +159,6 @@ public class test {
 		errorLog.setEditable(false);
 		panel.add(scrollPane);
 
-		//Opens a window for viewing the File
 		JButton btnFilePreview = new JButton("File Preview");
 		btnFilePreview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -188,6 +168,7 @@ public class test {
 				} else {
 					// first check if Desktop is supported by Platform or not
 					if (!Desktop.isDesktopSupported()) {
+						System.out.println("Desktop is not supported");
 						return;
 					}
 
@@ -201,15 +182,13 @@ public class test {
 				}
 			}
 		});
-		btnFilePreview.setBounds(245, 47, 118, 29);
+		btnFilePreview.setBounds(10, 85, 350, 29);
 		panel.add(btnFilePreview);
-		
-		//This button initiates the processing of the file and out puts it to OUTPUT.txt
+
 		JButton btnProcessFile = new JButton("Process File and Save");
 		btnProcessFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (filename != null && filename.exists()) {
-					//Ensuring the file extension is .txt before continuing
 					if (filename.toString().lastIndexOf(".") != -1 && filename.toString().lastIndexOf(".") != 0) {
 						String fileExtension = filename.toString().substring(filename.toString().lastIndexOf(".") + 1);
 						if (fileExtension.equals("txt")) {
@@ -223,7 +202,7 @@ public class test {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-						} else { // Output Error to the Error log 
+						} else {
 							String formattedDate = LocalDateTime.now().format(myFormatObj);
 							errorLog.append(formattedDate + " - File extension is not .txt cannot proceed\n");
 						}
@@ -234,10 +213,9 @@ public class test {
 				}
 			}
 		});
-		btnProcessFile.setBounds(10, 80, 353, 29);
+		btnProcessFile.setBounds(245, 47, 115, 29);
 		panel.add(btnProcessFile);
-		
-		// Button to clear the Error log
+
 		JButton btnClearLog = new JButton("Clear");
 		btnClearLog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -248,18 +226,12 @@ public class test {
 		panel.add(btnClearLog);
 	}
 
-	/**
-	 * This method Reads the commands and contents of the file and manipulates the text 
-	 * accordingly. 
-	 * @param file
-	 */
+	// processFile begins the reading, using the Buffered Reader.
 	public void processFile(File file) throws Exception {
 
-		BufferedReader br = new BufferedReader(new FileReader(file));
-	
-		BufferedWriter writer = new BufferedWriter(new FileWriter(output));// destination can be specified
-																						// just like in the reader
-		// using buffered reader
+		BufferedReader br = new BufferedReader(new FileReader(file));// using buffered reader
+		FileWriter tw = new FileWriter(output, false);
+
 		while ((st = br.readLine()) != null) {
 			if (st.length() == 2 && st.charAt(0) == '-') {
 				char command = st.charAt(1);
@@ -313,8 +285,7 @@ public class test {
 				}
 				// Extra
 				case 'e': {
-					writer.write('\n');
-					writer.write('\n');
+					tw.write('\n');
 					break;
 				}
 				case 'n': {
@@ -327,7 +298,7 @@ public class test {
 					break;
 				}
 				case 't': {
-					isTitle = true;
+					isT = true;
 					break;
 				}
 
@@ -335,18 +306,10 @@ public class test {
 
 			} // end of if
 			if(st.charAt(0) == '-') {
-				for(int i = 79; i<complete.length(); i+=79) {
-					//st.replace(st.charAt(i),'\n');
-					complete = complete.substring(0,i) + " \n" + complete.substring(i, complete.length());
-				}
+
 				complete+='\n';
-				writer.write(complete);
-				writer.write('\n');
 				complete = check(complete);
-				FileWriter tw = new FileWriter(output, false);
-				complete="     "+complete;
 				tw.write(complete);
-				tw.close();
 				complete ="";
 			}else {
 				complete += st;			
@@ -354,7 +317,8 @@ public class test {
 			
 			
 		}
-		writer.close();
+		tw.close();
+		br.close();
 	}
 
 	public String check(String line) {
@@ -365,16 +329,20 @@ public class test {
 			if (isI) {
 				if (is1 == true) {
 					if (isSingle == true) {// single spaced
-						line ='\t'+line;
+						line =I +line;
 						//System.out.println(line);
 						for(int i = 80; i<line.length(); i+=80) {
-							line = line.substring(0,i) + '\n' + line.substring(i, line.length());
+							line = line.substring(0,i) + " \n" + line.substring(i, line.length());
 						}
 						//line = line.charAt()
 						
 					} // end of isSingle
 					else { // is Doubled
-
+						line =I +line;
+						//System.out.println(line);
+						for(int i = 80; i<line.length(); i+=80) {
+							line = line.substring(0,i) + "\n\n" + line.substring(i, line.length());
+						}
 					}
 				} // end of is1
 				else {// if 2 columns
