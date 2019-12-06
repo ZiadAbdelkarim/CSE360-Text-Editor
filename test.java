@@ -98,6 +98,7 @@ public class test {
 				menu += "\n\nExtra commands:";
 				menu += "\n-e    adds a blank line where the command is placed";
 				menu += "\n-n    reset back to default";
+				menu += "\n-t    Title (center justification)";
 				JOptionPane.showMessageDialog(null, menu);
 			}
 		});
@@ -146,8 +147,6 @@ public class test {
 					String formattedDate = LocalDateTime.now().format(myFormatObj);
 					errorLog.append(formattedDate + " - No File Specified\n");
 				} else {
-					File file = new File("C:/Users/Angel Flores/Desktop/test1.txt");
-
 					// first check if Desktop is supported by Platform or not
 					if (!Desktop.isDesktopSupported()) {
 						System.out.println("Desktop is not supported");
@@ -167,7 +166,7 @@ public class test {
 		btnFilePreview.setBounds(10, 85, 350, 29);
 		panel.add(btnFilePreview);
 
-		JButton btnProcessFile = new JButton("Process File");
+		JButton btnProcessFile = new JButton("Process File and Save");
 		btnProcessFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (filename != null && filename.exists()) {
@@ -213,6 +212,29 @@ public class test {
 		int Tspace = 80; // total characters in a line
 		int Uspace = 0; // unused space, the gaps filling in the line with as much text but still have
 						// the remaining space
+		//Just.
+		boolean isL = true;	// Left
+		boolean isR = false;	// Rigth
+		boolean isC = false;	// Center
+		
+		//Spacing
+		boolean isS = true;	// Single
+		boolean isD = false;	// Double
+		
+		//Indent
+		boolean isIndent = false;	// Is there indentation
+		boolean isI = false;	// Indent
+		boolean isB = false;	// Multiple Indents
+		
+		//Column
+		boolean is1 = true;	// Single
+		boolean is2 = false;	// Double 
+		
+		//Extra
+		boolean isE = false;	// Inline Blank
+		boolean isN = false;	// Set to Default		
+		boolean isT = false;	// Title
+		
 
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String st;
@@ -221,26 +243,114 @@ public class test {
 		// using buffered reader
 		while ((st = br.readLine()) != null) {
 			// testing to replicate the file by reading empty lines and reinserting the newline to the output file
-			if (st.length() == 0) { // if its a new line then st.length() = 0, else lets check if its just a bunch of spaces
-				writer.write('\n');
-				writer.write('\n');
-			} else { // check if its a bunch of spaces
-				boolean allSpace = true;
-				int i = 0;
-				while (allSpace == true && i < st.length()) {
-					// if we find something that is not a space, its not a new line.
-					if (st.charAt(i) != ' ') {
-						allSpace = false;
+//			if (st.length() == 0) { // if its a new line then st.length() = 0, else lets check if its just a bunch of spaces
+//				writer.write('\n');
+//				writer.write('\n');
+//			} else { // check if its a bunch of spaces
+//				boolean allSpace = true;
+//				int i = 0;
+//				while (allSpace == true && i < st.length()) {
+//					// if we find something that is not a space, its not a new line.
+//					if (st.charAt(i) != ' ') {
+//						allSpace = false;
+//					}
+//					i++;
+//				}
+//				// after going through the string and its all spaces, just make it a new line
+//				if (allSpace == true) {
+//					writer.write('\n');
+//					writer.write('\n');
+//				} else
+//					writer.write(st);
+//			}
+			
+			if(st.length()== 2 && st.charAt(0) == '-') {
+				char command = st.charAt(1);
+				switch(command) {
+				//just.
+					case 'l':{
+						isL = true;
+						isR = false;
+						isC = false;
+						break;
 					}
-					i++;
-				}
-				// after going through the string and its all spaces, just make it a new line
-				if (allSpace == true) {
-					writer.write('\n');
-					writer.write('\n');
-				} else
-					writer.write(st);
+					case 'r':{
+						isL = false;
+						isR = true;
+						isC = false;
+						break;
+					}
+					case 'c':{
+						isL = false;
+						isR = false;
+						isC = true;
+						break;					
+					}
+				//spacing
+					case 's':{
+						isS = true;
+						isD = false;
+						break;
+					}
+					case 'd':{
+						isS = false;
+						isD = true;
+						break;
+					}
+				//indent
+					case 'i':{
+						isIndent = true;
+						isI = true;
+						isB = false;
+						break;
+					}
+					case 'b':{
+						isIndent = true;
+						isI = false;
+						isB = true;
+						break;
+					}
+				// Coloumn 
+					case '1':{
+						is1 = true;
+						is2 = false;
+						break;
+					}
+					case '2':{
+						is1 = false;
+						is2 = true;
+						break;
+					}
+				// Extra 
+					case 'e':{
+						isE = true;
+						break;
+					}
+					case'n' :{
+						isN = true;
+						break;
+					}
+					case't' :{
+						isT=true;
+						break;
+					}
+					
+				} //end of switch				
+				
+			} // end of if
+		// Starting if statements 
+			if(isL == true) {
+				
 			}
+			if(isR == true) {
+				
+			}
+			if(isC == true) {
+				
+			}
+			
+			
+			
 		}
 		writer.close();
 	}
