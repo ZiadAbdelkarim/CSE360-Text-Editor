@@ -22,11 +22,11 @@ public class test {
 	private JFrame frmTextEditor;
 	private File filename;
 	// Just.
-	boolean isL = true; // Left
-	boolean isC = false; // Center
+	boolean isLeft = true; // Left
+	boolean isCenter = false; // Center
 
 	// Spacing
-	boolean isS = true; // Single
+	boolean isSingle = true; // Single
 
 	// Indent
 	boolean isIndent = false; // Is there indentation
@@ -230,11 +230,11 @@ public class test {
 		int Uspace = 0; // unused space, the gaps filling in the line with as much text but still have
 						// the remaining space
 		// Just.
-		boolean isL = true; // Left
-		boolean isC = false; // Center
+		boolean isLeft = true; // Left
+		boolean isCenter = false; // Center
 
 		// Spacing
-		boolean isS = true; // Single
+		boolean isSingle = true; // Single
 
 		// Indent
 		boolean isIndent = false; // Is there indentation
@@ -282,27 +282,27 @@ public class test {
 				switch (command) {
 				// just.
 				case 'l': {
-					isL = true;
-					isC = false;
+					isLeft = true;
+					isCenter = false;
 					break;
 				}
 				case 'r': {
-					isL = false;
-					isC = false;
+					isLeft = false;
+					isCenter = false;
 					break;
 				}
 				case 'c': {
-					isL = false;
-					isC = true;
+					isLeft = false;
+					isCenter = true;
 					break;
 				}
 				// spacing
 				case 's': {
-					isS = true;
+					isSingle = true;
 					break;
 				}
 				case 'd': {
-					isS = false;
+					isSingle = false;
 					break;
 				}
 				// indent
@@ -334,10 +334,10 @@ public class test {
 					break;
 				}
 				case 'n': {
-					isL = true;
-					isC = false;
+					isLeft = true;
+					isCenter = false;
 
-					isS = true;
+					isSingle = true;
 
 					is1 = true;
 					break;
@@ -351,9 +351,14 @@ public class test {
 
 			} // end of if
 			
-			while(st.length() == 2 && st.charAt(0) == '-') {
-				
+			while(st.charAt(0) != '-') {
+				st+=st;		
 			}
+			for(int i = 79; i<st.length(); i+=79) {
+				//st.replace(st.charAt(i),'\n');
+				st = st.substring(0,i) + "\n" + st.substring(i, st.length());
+			}
+			st= st+'\n';
 			
 		}
 		writer.close();
@@ -363,21 +368,21 @@ public class test {
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String I ="     ";// indent with 5 spaces
 		String B = "          ";//indent with 10 spaces
-		if (isIndent == true && (isL == true || isC != true)) {
+		if (isIndent == true && (isLeft == true || isCenter != true)) {
 			if (isI) {
 				if (is1 == true) {
-					if (isS == true) {// single spaced
+					if (isSingle == true) {// single spaced
 						line = I + line;
-						line = line.charAt()
+						//line = line.charAt()
 						
-					} // end of isS
+					} // end of isSingle
 					else { // is Doubled
 
 					}
 				} // end of is1
 				else {// if 2 columns
-					if (isS == true) {
-					} // end of isS
+					if (isSingle == true) {
+					} // end of isSingle
 					else { // is Doubled
 
 					}
@@ -385,15 +390,15 @@ public class test {
 			} // end of isI
 			if (isB) {
 				if (is1 == true) {
-					if (isS == true) {
-					} // end of isS
+					if (isSingle == true) {
+					} // end of isSingle
 					else { // is Doubled
 
 					}
 				} // end of is1
 				else {// if 2 columns
-					if (isS == true) {
-					} // end of isS
+					if (isSingle == true) {
+					} // end of isSingle
 					else { // is Doubled
 
 					}
@@ -401,15 +406,15 @@ public class test {
 			} // end of isB
 		} // end of if isIndent
 		if (is1 == true) { // COLUMN
-			if (isS == true) { // SPACING
-			} // end of isS
+			if (isSingle == true) { // SPACING
+			} // end of isSingle
 			else { // is Doubled SPACING
 
 			}
 		} // end of is1
 		else {// if 2 columns COLUMN
-			if (isS == true) { // SPACING
-			} // end of isS
+			if (isSingle == true) { // SPACING
+			} // end of isSingle
 			else { // is Doubled SPACING
 
 			}
