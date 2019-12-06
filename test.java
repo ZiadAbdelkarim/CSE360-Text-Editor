@@ -1,3 +1,10 @@
+/** 
+ *  Group:       8
+ *  Name: 		 Ziad Abdelkarim, Maxim Tolea, Angel Flores, Chad Lutz
+ *  Class:		 CSE360
+ *  Section: 	 Wedneday 9:40 am
+ *  Assignment:  Text Editor Final Project
+ */
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,26 +24,32 @@ import java.time.format.DateTimeFormatter;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 
+/*
+	This class holds all of the elements of the window interface for the Text Editor 1000. This also contains all of the processing 
+	calculations to be done on a file. 
+*/
 public class test {
 
 	private JFrame frmTextEditor;
 	private File filename;
-	// Just.
+	
+	// The following variables are for determining what command are called
+	// Justification booleans
 	boolean isL = true; // Left
 	boolean isC = false; // Center
 
-	// Spacing
+	// Spacing booleans
 	boolean isS = true; // Single
 
-	// Indent
+	// Indentation booleans
 	boolean isIndent = false; // Is there indentation
 	boolean isI = false; // Indent
 	boolean isB = false; // Multiple Indents
 
-	// Column
+	// Column boolean
 	boolean is1 = true; // Single
 
-	// Extra
+	// Extra booleans
 	boolean isT = false; // Title
 	
 	String st;
@@ -68,6 +81,7 @@ public class test {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		// The component of the frame
 		frmTextEditor = new JFrame();
 		frmTextEditor.setTitle("Text Editor 1000");
 		frmTextEditor.setBounds(400, 70, 400, 600);
@@ -156,7 +170,8 @@ public class test {
 		scrollPane.setViewportView(errorLog);
 		errorLog.setEditable(false);
 		panel.add(scrollPane);
-
+		
+		//The file preview button for finding he file to be manipulated
 		JButton btnFilePreview = new JButton("File Preview");
 		btnFilePreview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -182,7 +197,8 @@ public class test {
 		});
 		btnFilePreview.setBounds(10, 85, 350, 29);
 		panel.add(btnFilePreview);
-
+		
+		//Process file button which results in the saving of the file
 		JButton btnProcessFile = new JButton("Process File and Save");
 		btnProcessFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -253,32 +269,10 @@ public class test {
 																						// just like in the reader
 		// using buffered reader
 		while ((st = br.readLine()) != null) {
-			// testing to replicate the file by reading empty lines and reinserting the
-			// newline to the output file
-			// if (st.length() == 0) { // if its a new line then st.length() = 0, else lets
-			// check if its just a bunch of spaces
-			// writer.write('\n');
-			// writer.write('\n');
-			// } else { // check if its a bunch of spaces
-			// boolean allSpace = true;
-			// int i = 0;
-			// while (allSpace == true && i < st.length()) {
-			// // if we find something that is not a space, its not a new line.
-			// if (st.charAt(i) != ' ') {
-			// allSpace = false;
-			// }
-			// i++;
-			// }
-			// // after going through the string and its all spaces, just make it a new line
-			// if (allSpace == true) {
-			// writer.write('\n');
-			// writer.write('\n');
-			// } else
-			// writer.write(st);
-			// }
-
+			
 			if (st.length() == 2 && st.charAt(0) == '-') {
 				char command = st.charAt(1);
+				//switch to determine and act upon the commands
 				switch (command) {
 				// just.
 				case 'l': {
